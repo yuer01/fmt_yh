@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>地图</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <br><br>
+    <div class="aui-btn aui-btn-block aui-btn-outlined" tapmode onclick="getLocation();">打开地图</div>
+    <br>
+    <div class="aui-btn aui-btn-block aui-btn-outlined" tapmode onclick="getLocationServices();">定位是否开启</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    var map;
+    //api初始化
+    apiready = function() {
+        map = api.require('bMap');
+        //判断机型，ios需要初始化
+        if (api.systemType == 'ios') {
+            map.initMapSDK(function(ret) {
+                if (ret.status) {
+                    alert('地图初始化成功，可以从百度地图服务器检索信息了！');
+                }
+            });
+        }
+        //getLocation();
+    };
+
+    //初始化数据
+    function getLocation() {
+        //获取当前经纬度
+        map.getLocation({
+            accuracy: '100m',
+            autoStop: true,
+            filter: 1
+        }, function(ret, err) {
+            if (ret.status) {
+                fnInitView(ret);
+            } else {
+                alert(err.code);
+            }
+        });
+    }
+    /**
+     * 初始化页面布局
+     *
+     * @param {JSON} ret  经纬度数据
+     */
+    function fnInitView(ret) {
+        //fnInitViewInput();
+        fnInitViewMap(ret);
+        console.log(ret.lon);
+        console.log(ret.lat);
+    };
+
+    /**
+     * 初始化地图视图
+     *
+     * @param {JSON} ret 经纬度数据
+     */
+    function fnInitViewMap(ret) {
+        map.open({
+            rect: {
+                x: 0,
+                y: 40,
+                w: api.frameWidth,
+                h: api.frameHeight - 40
+            },
+            center: {
+                lon: ret.lon,
+                lat: ret.lat
+            },
+            zoomLevel: 18,
+            showUserLocation: true,
+            fixedOn: api.frameName,
+            fixed: true
+        }, function(ret) {
+            if (ret.status) {
+                console.log('地图打开成功');
+
+            }
+        });
+        //在地图上根据经纬度添加标注
+        map.addAnnotations({
+            annotations: [{
+                id: 1,
+                lon: 113.73706568446782,
+                lat: 34.78279036359735
+            }],
+            //icon: '',
+            icon: 'widget://image/abc2.png',
+            draggable: true
+        }, function(ret) {
+            if (ret) {
+                console.log(ret.id);
+            }
+        });
+
+        //设置点击标注后的弹出内容
+        map.setBubble({
+            id: 1,
+            bgImg: 'widget://image/bai.jpg',
+            content: {
+                title: '很大数据库号地块',
+                subTitle: '的骄傲赛浪快捷的考虑姜思达的凉开水机看',
+                //illus: 'http://ico.ooopic.com/ajax/iconpng/?id=145044.png'//配图
+            },
+            styles: {
+                titleColor: '#000',
+                titleSize: 16,
+                subTitleColor: '#999',
+                subTitleSize: 12,
+                illusAlign: 'left'
+            }
+        }, function(ret) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+                console.log(JSON.stringify(ret));
+            }
+        });
+
+
+        //设置百度地图相关属性 standard（标准地图） trafficOn（打开实时路况）
+        //trafAndsate（实时路况和卫星地图） satellite（卫星地图）
+        map.setMapAttr({
+            type: 'standard'
+        });
+
+        //显示当前位置小箭头 朝向
+        map.showUserLocation({
+            isShow: true,
+            trackingMode: 'none'
+        });
+
+        //根据经纬度获取位置信息
+        map.getNameFromCoords({
+            lon: ret.lon,
+            lat: ret.lat
+        }, function(ret, err) {
+            if (ret.status) {
+                start = ret;
+                start['city'] = ret.city;
+                //console.log(JSON.stringify(ret));
+                console.log('当前位置:' + ret.address);
+            };
+        });
+    }
+    //获取gps 定位是否开启
+    function getLocationServices() {
+        var bMap = api.require('bMap');
+        bMap.getLocationServices(function(ret, err) {
+            if (ret.enable) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert("未开启定位功能！");
+            }
+        });
+    }
+</script>
+
+</html>

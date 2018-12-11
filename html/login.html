@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" style="padding-top:25px;">登录</header>
+    <div class="aui-content-padded">
+        <br>
+        <div class="aui-content aui-margin-b-15">
+            <ul class="aui-list aui-form-list">
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont aui-icon-mobile"></i>
+                        </div>
+                        <div class="aui-list-item-input">
+                            <input type="text" placeholder="请输入用户名" id="UserName" value="15225055375">
+                        </div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont aui-icon-lock"></i>
+                        </div>
+                        <div class="aui-list-item-input">
+                            <input type="password" placeholder="请输入密码" id="passWord" value="123456">
+                        </div>
+                        <div class="aui-list-item-label-icon">
+                            <i class="aui-iconfont aui-icon-display"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <input class="aui-btn aui-btn-info aui-btn-block" type="submit" value="登录" tapmode onclick="login();">
+        </div>
+        <a href="registered.html" style="float: right">立即注册</a>
+    </div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    //两个入口函数
+    apiready = function() {
+            $(document).ready(function() {
+
+            });
+        }
+        //登录
+    function login() {
+        //获取输入参数
+        var UserName = $('#UserName').val();
+        var passWord = $('#passWord').val();
+        var url = 'http://aiche.chengcaibao.net/api/user/login?UserName=' + UserName + '&passWord=' + passWord;
+        api.ajax({
+            url: url,
+            method: 'post',
+        }, function(ret, err) {
+            if (ret) {
+                //console.log( JSON.stringify( ret ) );
+                if (ret.code == 1) {
+                    //alert(ret.value.Message)
+                    api.openWin({
+                        name: 'fingerprint',
+                        url: 'fingerprint.html',
+                    });
+                } else if (ret.code == 0) {
+                    alert(ret.value.Message)
+                }
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+
+    }
+</script>
+
+</html>

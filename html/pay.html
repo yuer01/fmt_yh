@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>支付</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" style="padding-top:25px;">
+        <a class="aui-pull-left" href="../index.html">
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        支付
+    </header>
+    <div style="margin-top:15%; text-align: center;">
+        <h2 id="h2"></h2>
+    </div>
+    <br><br>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list" style="width:60%;margin-left: 20%;">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        金额
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="money" id="money">
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <br><br>
+        <ul class="aui-list aui-form-list" style="width:80%;margin-left: 10%;">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        支付密码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="password" placeholder="password" id="password">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="aui-btn aui-btn-block aui-btn-outlined" style="margin-left: 2rem;
+    margin-right: 2rem;
+    width: 80%;
+    margin-top: 2rem;" tapmode onclick="pay();">立即支付</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    //两个入口函数
+    apiready = function() {
+        $(document).ready(function() {
+            //console.log(api.pageParam.name);
+            $('#h2').text(api.pageParam.name);
+        });
+    }
+
+    function pay() {
+        var money = $('#money').val();
+        var password = $('#password').val();
+        if (money == '' || money == null || money == 'undefined') {
+            alert('请输入金额');
+        } else if (password == '' || password == null || password == 'undefined') {
+            alert('请输入密码');
+        } else {
+            api.ajax({
+                url: 'http://541436.testyuming.top/index/index/push',
+                method: 'post',
+                timeout: 5,
+                data: {
+                    values: {
+                        registrationId: api.pageParam.id,
+                        money: money
+                    },
+                }
+            }, function(ret, err) {
+                if (ret) {
+                    //console.log(ret.code);
+                } else {
+                    //console.log(JSON.stringify(err));
+                    if (err.code == 3) {
+                        alert("支付成功")
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+</html>

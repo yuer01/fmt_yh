@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>手势锁</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <br><br>
+    <div class="aui-btn aui-btn-block" tapmode onclick="set();">设置手势密码</div>
+    <br>
+    <div class="aui-btn aui-btn-block" tapmode onclick="show();">验证手势锁</div>
+
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    function set() {
+        var screenLock = api.require('screenLock');
+        screenLock.set({
+            color: '#2dcfb9'
+        }, function(ret, err) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+                //console.log(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    function show() {
+        var screenLock = api.require('screenLock');
+        screenLock.show({
+            color: '#2dcfb9'
+        }, function(ret, err) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+                console.log(JSON.stringify(ret));
+                if (ret.status == '111') {
+                    alert('解锁成功')
+                }
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+</script>
+
+</html>

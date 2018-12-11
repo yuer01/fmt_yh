@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>广告</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        #left {
+            width: 45%;
+            margin-top: 35px;
+            margin-left: 10px;
+            float: left;
+        }
+
+        #right {
+            width: 45%;
+            margin-top: 35px;
+            margin-right: 10px;
+            float: right;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <br><br>
+    <div class="aui-btn aui-btn-block aui-btn-outlined aui-btn-sm" id="left" tapmode onclick="showBanner();">横幅广告</div>
+    <div class="aui-btn aui-btn-block aui-btn-outlined aui-btn-sm" id="right" tapmode onclick="removeBanner();">移除横幅广告</div>
+    <br>
+    <div class="aui-btn aui-btn-block aui-btn-outlined aui-btn-sm" id="left" tapmode onclick="showInterstitial();">插屏广告</div>
+    <div class="aui-btn aui-btn-block aui-btn-outlined aui-btn-sm" id="right" tapmode onclick="closeInterstitial();">移除插屏广告</div>
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    //============================展示横幅广告(banner)=====================
+    function showBanner() {
+        var chance = api.require('chanceAd');
+        //bnner 初始化
+        chance.initChanceAd({
+            adType: "0",
+            publisherID: "839816764-55894B-A8ED-C400-19B2C4D36",
+            placementID: "839816764pj8vvw"
+        }, function(ret, err) {
+
+        });
+        //展示
+        chance.showBanner({
+            publisherID: "839816764-55894B-A8ED-C400-19B2C4D36",
+            placementID: "839816764pj8vvw",
+            x: "0",
+            y: "auto",
+            "requestInterval": "20",
+            "displayTime": "15"
+        }, function(ret, err) {});
+    }
+    //移除banner广告
+    function removeBanner() {
+        var chance = api.require('chanceAd');
+        chance.removeBanner({}, function(ret, err) {});
+    }
+
+    //============================展现插屏广告(interstitial)=====================
+    function showInterstitial() {
+      var chance = api.require('chanceAd');
+        //初始化
+        chance.initChanceAd({
+            adType: "1",
+            publisherID: "839816764-55894B-A8ED-C400-19B2C4D36",
+            placementID: "839816764pj921o"
+        }, function(ret, err) {});
+
+        //展示
+        chance.showInterstitial({
+            publisherID: "100032-4CE817-ABA2-5B48-14D009296720",
+            placementID: "",
+            scale: "0.9"
+        }, function(ret, err) {});
+    }
+    //移除插屏广告
+    function closeInterstitial() {
+        var chance = api.require('chanceAd');
+        chance.closeInterstitial({}, function(ret, err) {});
+    }
+</script>
+
+</html>

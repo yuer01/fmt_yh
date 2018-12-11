@@ -1,77 +1,135 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title></title>
-
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-    <style>
-        .empty{ text-align: center; padding: 120px 0; }
-    </style>
-    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <link rel="stylesheet" type="text/css" href="../css/aui-slide.css" />
-    <style type="text/css">
-    body{background-color: #fff;}
-    .aui-content-padded {
-        padding: 0.75rem;
-        background-color: #ffffff;
-        margin-top: 0.75rem;
-    }
-    .top10{padding-top: 20px;}
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        .empty {
+            text-align: center;
+            padding: 120px 0;
+        }
 
-    .bg-dark {
-        background: #333333 !important;
-    }
-    .aui-slide-node img {
-        width: auto;
-        height: 100%;
-    }
-    .aui-col-xs-3 {width: 25%; text-align: center;padding:0.2rem 0 !important;}
-    .aui-col-xs-3 img{width: 56%; margin:0 auto;}
-    .aui-grid {padding-top:10px;}
+        .aui-content-padded {
+            padding: 0.75rem;
+            background-color: #ffffff;
+            margin-top: 0.75rem;
+        }
 
-    .pic_ad{padding:10px 10px 15px 15px;background-color: #fff;}
-    .ad_quan {font-size: 12px;padding:6px 6px 10px 10px; color:#757575;margin-top:20px;}
+        .top10 {
+            padding-top: 20px;
+        }
 
-    .ad_quan1 {float: left; width: 50%; padding-right: 4px;padding-left:0.6rem; }
-    .ad_quan1 img{padding:2px;}
-    .ad_quan2 {float: left; width: 50%; padding-right: 6px;}
-    .ad_quan21 div{float: left; width: 50%;padding:2px;}
-    .ad_quan21 img{float: left; width: 50%;padding:2px;}
+        .bg-dark {
+            background: #333333 !important;
+        }
 
+        .aui-slide-node img {
+            width: auto;
+            height: 100%;
+        }
 
-    .fujin .right img{float: right;padding:3px ;margin:0 6px;}
-    .fujin {color:#757575;}
+        .aui-col-xs-3 {
+            width: 25%;
+            text-align: center;
+            padding: 0.2rem 0 !important;
+        }
 
+        .aui-col-xs-3 img {
+            width: 60%;
+            margin: 0 auto;
+        }
 
-    h3{font-weight: bold;color:#333333;font-size:0.8rem;}
-    .xing li{float: left;}
-    .xing li img{width: 14px;padding: 2px;}
+        .aui-grid {
+            padding-top: 10px;
+        }
 
-    .div_xing span{float: left;}
+        .pic_ad {
+            padding: 10px;
+            background-color: #fff;
+        }
 
+        .ad_quan {
+            font-size: 12px;
+            padding: 4px;
+            color: #757575;
+            margin-top: 20px;
+        }
 
-    .tuijianshangpin{ padding:10px;}
-    .padding-header {padding:10px;}
+        .ad_quan1 {
+            float: left;
+            width: 50%;
+            padding-right: 4px;
+        }
 
-    .aui-bar-nav .aui-title {left:4rem !important;right:3rem !important;}
+        .ad_quan1 img {
+            padding: 2px;
+        }
 
+        .ad_quan2 {
+            float: left;
+            width: 50%;
+        }
 
-    /*.aui-list .aui-list-item-text {justify-content:space-around !important;-webkit-justify-content:space-around !important;}
-*/
+        .ad_quan21 div {
+            float: left;
+            width: 50%;
+            padding: 2px;
+        }
+
+        .ad_quan21 img {
+            float: left;
+            width: 50%;
+            padding: 2px;
+        }
+
+        .fujin .right img {
+            float: right;
+            padding: 3px;
+            margin: 0 6px;
+        }
+
+        .fujin {
+            color: #757575;
+        }
+
+        h3 {
+            font-weight: bold;
+            color: #333333;
+            font-size: 18px;
+        }
+
+        .xing li {
+            float: left;
+        }
+
+        .xing li img {
+            width: 14px;
+            padding: 2px;
+        }
+
+        .div_xing span {
+            float: left;
+        }
+
+        .saoyisao {
+            max-width: 10%;
+            position: absolute;
+            right: 0;
+            top: 3px;
+        }
     </style>
 </head>
+
 <body>
-  <div id="wrap" class="flex-wrap flex-vertical ">
-      <header class="padding-header aui-bar aui-bar-nav aui-bar-light" style="background-color:#75b3fc">
-          <a class="aui-pull-left ">
-              郑州▽
-          </a>
-          <div class="aui-title">
-            <div class="aui-searchbar" id="search"style="background-color:#75b3fc" >
+    <div id="wrap" class="flex-wrap flex-vertical top10">
+        <header class="none">
+            <div class="aui-searchbar" id="search" style="width: 90%;">
                 <div class="aui-searchbar-input aui-border-radius">
                     <i class="aui-iconfont aui-icon-search"></i>
                     <input type="search" placeholder="请输入搜索内容" id="search-input">
@@ -79,351 +137,335 @@
                         <i class="aui-iconfont aui-icon-close"></i>
                     </div>
                 </div>
-                <div class="aui-searchbar-btn" tapmode style="color:#fff !important;">取消</div>
+                <div class="aui-searchbar-btn" tapmode>取消</div>
             </div>
-          </div>
-          <a class="aui-pull-right " onclick="open_saoyisao()">
-              <img src="../image/img_sm_btn.png" style="width:1.2rem;margin-top:0.4rem; " />
-          </a>
-      </header>
-      <div id="aui-slide3">
-          <div class="aui-slide-wrap" >
-              <div class="aui-slide-node bg-dark">
-                  <img src="../image/home_top2.png" />
-              </div>
-              <div class="aui-slide-node bg-dark">
-                  <img src="../image/home_pic2.jpg" />
-              </div>
-              <div class="aui-slide-node bg-dark">
-                  <img src="../image/home_pic3.jpg" />
-              </div>
-          </div>
-          <div class="aui-slide-page-wrap"><!--分页容器--></div>
-      </div>
+            <img src="../image/saoyisao.png" alt="" class="saoyisao" tapmode onclick="scan_it();">
+        </header>
 
-      <section class="aui-grid">
-       <div class="aui-row">
-           <div class="aui-col-xs-3" >
-               <img src="../image/img_xc_btn.png"/>
-               <div class="aui-grid-label">洗车</div>
-           </div>
-           <div class="aui-col-xs-3">
-               <img src="../image/img_by_btn.png"/>
-
-               <div class="aui-grid-label">保养</div>
-           </div>
-           <div class="aui-col-xs-3">
-               <img src="../image/img_jy_btn.png"/>
-               <div class="aui-grid-label">加油充值</div>
-           </div>
-           <div class="aui-col-xs-3">
-               <img src="../image/img_bx_btn.png"/>
-               <div class="aui-grid-label">会员保险</div>
-           </div>
-
-
-           <div class="aui-col-xs-3">
-               <img src="../image/img_wz_btn.png"/>
-               <div class="aui-grid-label">违章查询</div>
-           </div>
-           <div class="aui-col-xs-3">
-               <img src="../image/img_scdl_btn.png"/>
-               <div class="aui-grid-label">车审代理</div>
-           </div>
-           <div class="aui-col-xs-3">
-               <img src="../image/img_ksjy_btn.png"/>
-               <div class="aui-grid-label">快速救援</div>
-           </div>
-           <div class="aui-col-xs-3">
-               <img src="../image/img_qbfw_btn.png"/>
-               <div class="aui-grid-label">全部服务</div>
-           </div>
-       </div>
-   </section>
-
-  <div class="pic_ad">
-   <image src="../image/img_indexad.png" width="100%"/>
-  </div>
-
-  <div class="ad_quan">
-    <div class="ad_quan1">
-      <h3>特价大促</h3>
-      <span>领券最高减300</span>
-      <img src="../image/img_ad3_btn.png" style="margin:0rem;width:7rem"/>
-    </div>
-    <div class="ad_quan2">
-      <div class="ad_quan21">
-        <div class="ad_quan211">
-          <h3>养车神券</h3>
-          <span>满499减100</span>
-        </div>
-        <img  src="../image/img_ad2_btn.png"/>
-      </div>
-      <div style="clear:both;height:2.6rem;"></div>
-      <div class="ad_quan21">
-        <div class="ad_quan211">
-          <h3>保养套餐</h3>
-          <span>冬季保养特惠来袭</span>
-        </div>
-        <img  src="../image/img_ad1_btn.png"/>
-      </div>
-    </div>
-  </div>
-
-<div style="clear:both;"></div>
-<div style="clear:both;"></div>
-  <div class="fujin">
-
-    <ul class="aui-list aui-media-list fujin">
-        <li class="aui-list-header title" style="background-color:#fff">
-            <h3>附近门店</h3>
-            <div class="right">
-              <img src="../image/img_shoplist_dt_icon.png" width="30"/>
-              <img src="../image/img_search_bigbtn.png"width="30"/>
-              <img src="../image/img_sx_btn.png"width="30"/>
+        <div id="aui-slide3">
+            <div class="aui-slide-wrap">
+                <div class="aui-slide-node bg-dark">
+                    <img src="../image/home_top1.png" />
+                </div>
+                <div class="aui-slide-node bg-dark">
+                    <img src="../image/home_top1.png" />
+                </div>
+                <div class="aui-slide-node bg-dark">
+                    <img src="../image/home_top1.png" />
+                </div>
             </div>
+            <div class="aui-slide-page-wrap">
+                <!--分页容器-->
+            </div>
+        </div>
 
-        </li>
-        <li class="aui-list-item aui-list-item-middle">
-          	<div class="aui-media-list-item-inner">
-          	    <div class="aui-list-item-media" style="width: 3rem;">
-          		    <img src="../image/home_list_pic1.png" width="80" >
-          	    </div>
-          	    <div class="aui-list-item-inner aui-list-item-arrow">
-              		<div class="aui-list-item-text">
-              		    <div class="aui-list-item-title aui-font-size-14"><h3>一汽大众汽车美容中心</h3></div>
-              		    <div class="aui-list-item-right">3.5km</div>
-              		</div>
-              		<div class="aui-list-item-text div_xing"  >
-              		    <ul class="xing">
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_btn.png"/></li>
-                      </ul>
-                      <span  class="aui-list-item-left">4.8</span>
-                      <span class="aui-list-item-left">月订单 125</span>
-              		</div>
-                  <div class="aui-list-item-text">
+        <section class="aui-grid">
+            <div class="aui-row">
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_xc_btn.png" />
+                    <div class="aui-grid-label">洗车</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_by_btn.png" />
 
-                    <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
-                    <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
-
-                  </div>
-                  <div class="aui-list-item-text ">
-                      <img src="../image/img_zk_icon.png" width="20"/>
-                      <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
-                  </div>
-          	    </div>
-          	</div>
-        </li>
-
-        <li class="aui-list-item aui-list-item-middle">
-          	<div class="aui-media-list-item-inner">
-          	    <div class="aui-list-item-media" style="width: 3rem;">
-          		    <img src="../image/home_list_pic1.png" width="80">
-          	    </div>
-          	    <div class="aui-list-item-inner aui-list-item-arrow">
-              		<div class="aui-list-item-text">
-              		    <div class="aui-list-item-title aui-font-size-14"><h3>一汽大众汽车美容中心</h3></div>
-              		    <div class="aui-list-item-right">3.5km</div>
-              		</div>
-              		<div class="aui-list-item-text div_xing"  >
-              		    <ul class="xing">
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_btn.png"/></li>
-                      </ul>
-                      <span  class="aui-list-item-left">4.8</span>
-                      <span class="aui-list-item-left">月订单 125</span>
-              		</div>
-                  <div class="aui-list-item-text">
-
-                    <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
-                    <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
-
-                  </div>
-                  <div class="aui-list-item-text ">
-                      <img src="../image/img_zk_icon.png" width="20"/>
-                      <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
-                  </div>
-          	    </div>
-          	</div>
-        </li>
-
-        <li class="aui-list-item aui-list-item-middle">
-          	<div class="aui-media-list-item-inner">
-          	    <div class="aui-list-item-media" style="width: 3rem;">
-          		    <img src="../image/home_list_pic1.png" width="80">
-          	    </div>
-          	    <div class="aui-list-item-inner aui-list-item-arrow">
-              		<div class="aui-list-item-text">
-              		    <div class="aui-list-item-title aui-font-size-14"><h3>一汽大众汽车美容中心</h3></div>
-              		    <div class="aui-list-item-right">3.5km</div>
-              		</div>
-              		<div class="aui-list-item-text div_xing"  >
-              		    <ul class="xing">
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_hover_btn.png"/></li>
-                        <li><img src="../image/img_star_btn.png"/></li>
-                      </ul>
-                      <span  class="aui-list-item-left">4.8</span>
-                      <span class="aui-list-item-left">月订单 125</span>
-              		</div>
-                  <div class="aui-list-item-text">
-
-                    <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
-                    <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
-
-                  </div>
-                  <div class="aui-list-item-text ">
-                      <img src="../image/img_zk_icon.png" width="20"/>
-                      <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
-                  </div>
-          	    </div>
-          	</div>
-        </li>
-
-    </ul>
-  </div>
+                    <div class="aui-grid-label">保养</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_jy_btn.png" />
+                    <div class="aui-grid-label">加油</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_bx_btn.png" />
+                    <div class="aui-grid-label">保险</div>
+                </div>
 
 
-  <!-- 推荐商品 -->
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_wz_btn.png" />
+                    <div class="aui-grid-label">违章查询</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_scdl_btn.png" />
+                    <div class="aui-grid-label">车审代理</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_ksjy_btn.png" />
+                    <div class="aui-grid-label">快速救援</div>
+                </div>
+                <div class="aui-col-xs-3">
+                    <img src="../image/img_qbfw_btn.png" />
+                    <div class="aui-grid-label">全部服务</div>
+                </div>
+            </div>
+        </section>
 
-  <section class="aui-grid aui-margin-b-15 tuijianshangpin">
-    <h3>推荐商品</h3>
-      <div class="aui-row">
-          <div class="aui-col-xs-6"style="padding:2px;">
-              <img src="../image/pro_pic.png" class=""/>
-              <div class="aui-grid-label">汽车全年保养</div>
-              <div class="aui-grid-label" >
-                <span style="color:red">￥499.00</span>
-                <span><img src="../image/product_icon_1.png" width="32" style="position:relative;top:50%;"/></span>
-              </div>
-          </div>
-          <div class="aui-col-xs-6" style="padding:2px;">
-              <img src="../image/pro_pic2.jpg" class=""/>
-              <div class="aui-grid-label">汽车全年保养</div>
-              <div class="aui-grid-label">
-                <span style="color:red">￥459.00</span>
-                <span><img src="../image/product_icon_2.png" width="32"/></span>
-              </div>
-          </div>
-      </div>
-      <div class="aui-row">
-          <div class="aui-col-xs-6"style="padding:2px;">
-              <img src="../image/pro_pic3.jpg" class=""/>
-              <div class="aui-grid-label">汽车全年保养</div>
-              <div class="aui-grid-label" >
-                <span style="color:red">￥498.00</span>
-                <span><img src="../image/product_icon_1.png" width="32" style="position:relative;top:50%;"/></span>
-              </div>
-          </div>
-          <div class="aui-col-xs-6" style="padding:2px;">
-              <img src="../image/pro_pic4.jpg" class=""/>
-              <div class="aui-grid-label">汽车全年保养</div>
-              <div class="aui-grid-label">
-                <span style="color:red">￥469.00</span>
-                <span><img src="../image/product_icon_2.png" width="32"/></span>
-              </div>
-          </div>
-      </div>
+        <div class="pic_ad">
+            <image src="../image/img_indexad.png" width="100%" />
+        </div>
 
-  </section>
-</div>
+        <div class="ad_quan">
+            <div class="ad_quan1">
+                <h3>特价大促</h3>
+                <span>领券最高减300</span>
+                <img src="../image/img_ad3_btn.png" />
+            </div>
+            <div class="ad_quan2">
+                <div class="ad_quan21">
+                    <div class="ad_quan211">
+                        <h3>养车神券</h3>
+                        <span>满499减100</span>
+                    </div>
+                    <img src="../image/img_ad2_btn.png" />
+                </div>
+                <div style="clear:both;"></div>
+                <div class="ad_quan21">
+                    <div class="ad_quan211">
+                        <h3>保养套餐</h3>
+                        <span>冬季保养特惠来袭</span>
+                    </div>
+                    <img src="../image/img_ad1_btn.png" />
+                </div>
+            </div>
+        </div>
+
+        <div style="clear:both;"></div>
+        <div style="clear:both;"></div>
+        <div class="fujin">
+
+            <ul class="aui-list aui-media-list fujin">
+                <li class="aui-list-header title" style="background-color:#fff">
+                    <h3>附近门店</h3>
+                    <div class="right">
+                        <img src="../image/img_shoplist_dt_icon.png" width="30" />
+                        <img src="../image/img_search_bigbtn.png" width="30" />
+                        <img src="../image/img_sx_btn.png" width="30" />
+                    </div>
+
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width: 3rem;">
+                            <img src="../image/home_list_pic1.png" width="80">
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14">
+                                    <h3>一汽大众汽车美容中心</h3></div>
+                                <div class="aui-list-item-right">3.5km</div>
+                            </div>
+                            <div class="aui-list-item-text div_xing">
+                                <ul class="xing">
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_btn.png" /></li>
+                                </ul>
+                                <span class="aui-list-item-left">4.8</span>
+                                <span class="aui-list-item-left">月订单 125</span>
+                            </div>
+                            <div class="aui-list-item-text">
+
+                                <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
+                                <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
+
+                            </div>
+                            <div class="aui-list-item-text ">
+                                <img src="../image/img_zk_icon.png" width="20" />
+                                <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width: 3rem;">
+                            <img src="../image/home_list_pic1.png" width="80">
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14">
+                                    <h3>一汽大众汽车美容中心</h3></div>
+                                <div class="aui-list-item-right">3.5km</div>
+                            </div>
+                            <div class="aui-list-item-text div_xing">
+                                <ul class="xing">
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_btn.png" /></li>
+                                </ul>
+                                <span class="aui-list-item-left">4.8</span>
+                                <span class="aui-list-item-left">月订单 125</span>
+                            </div>
+                            <div class="aui-list-item-text">
+
+                                <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
+                                <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
+
+                            </div>
+                            <div class="aui-list-item-text ">
+                                <img src="../image/img_zk_icon.png" width="20" />
+                                <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width: 3rem;">
+                            <img src="../image/home_list_pic1.png" width="80">
+                        </div>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14">
+                                    <h3>一汽大众汽车美容中心</h3></div>
+                                <div class="aui-list-item-right">3.5km</div>
+                            </div>
+                            <div class="aui-list-item-text div_xing">
+                                <ul class="xing">
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_hover_btn.png" /></li>
+                                    <li><img src="../image/img_star_btn.png" /></li>
+                                </ul>
+                                <span class="aui-list-item-left">4.8</span>
+                                <span class="aui-list-item-left">月订单 125</span>
+                            </div>
+                            <div class="aui-list-item-text">
+
+                                <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
+                                <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
+
+                            </div>
+                            <div class="aui-list-item-text ">
+                                <img src="../image/img_zk_icon.png" width="20" />
+                                <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
 
 
+        <!-- 推荐商品 -->
+
+        <section class="aui-grid aui-margin-b-15">
+            <h3>推荐商品</h3>
+            <div class="aui-row">
+                <div class="aui-col-xs-6" style="padding:2px;">
+                    <img src="../image/pro_pic.png" class="" />
+                    <div class="aui-grid-label">汽车全年保养</div>
+                    <div class="aui-grid-label">
+                        <span style="color:red">￥499.00</span>
+                        <span><img src="../image/product_icon_1.png" width="32" style="position:relative;top:50%;"/></span>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6" style="padding:2px;">
+                    <img src="../image/pro_pic.png" class="" />
+                    <div class="aui-grid-label">汽车全年保养</div>
+                    <div class="aui-grid-label">
+                        <span style="color:red">￥499.00</span>
+                        <span><img src="../image/product_icon_2.png" width="32"/></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
-</html>
-<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui-slide.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
 <script type="text/javascript">
-    apiready = function(){
+    var slide3 = new auiSlide({
+            container: document.getElementById("aui-slide3"),
+            // "width":300,
+            "height": 240,
+            "speed": 500,
+            "autoPlay": 3000, //自动播放
+            "loop": true,
+            "pageShow": true,
+            "pageStyle": 'line',
+            'dotPosition': 'center'
+        })
+        //console.log(slide3.pageCount());
+    apiready = function() {
         api.parseTapmode();
-
-
     }
     var searchBar = document.querySelector(".aui-searchbar");
     var searchBarInput = document.querySelector(".aui-searchbar input");
     var searchBarBtn = document.querySelector(".aui-searchbar .aui-searchbar-btn");
     var searchBarClearBtn = document.querySelector(".aui-searchbar .aui-searchbar-clear-btn");
-    if(searchBar){
-        searchBarInput.onclick = function(){
+    if (searchBar) {
+        searchBarInput.onclick = function() {
             searchBarBtn.style.marginRight = 0;
         }
-        searchBarInput.oninput = function(){
-            if(this.value.length){
+        searchBarInput.oninput = function() {
+            if (this.value.length) {
                 searchBarClearBtn.style.display = 'block';
                 searchBarBtn.classList.add("aui-text-info");
                 searchBarBtn.textContent = "搜索";
-            }else{
+            } else {
                 searchBarClearBtn.style.display = 'none';
                 searchBarBtn.classList.remove("aui-text-info");
                 searchBarBtn.textContent = "取消";
             }
         }
     }
-    searchBarClearBtn.onclick = function(){
+    searchBarClearBtn.onclick = function() {
         this.style.display = 'none';
         searchBarInput.value = '';
         searchBarBtn.classList.remove("aui-text-info");
         searchBarBtn.textContent = "取消";
     }
-    searchBarBtn.onclick = function(){
+    searchBarBtn.onclick = function() {
         var keywords = searchBarInput.value;
-        if(keywords.length){
+        if (keywords.length) {
             searchBarInput.blur();
             document.getElementById("search-keywords").textContent = keywords;
-        }else{
-            this.style.marginRight = "-"+this.offsetWidth+"px";
+        } else {
+            this.style.marginRight = "-" + this.offsetWidth + "px";
             searchBarInput.value = '';
             searchBarInput.blur();
         }
     }
-</script>
 
-<script type="text/javascript" src="../script/aui-slide.js"></script>
-<script type="text/javascript" src="../script/jquery.js"></script>
-<script type="text/javascript" src="../script/aui-toast.js" ></script>
-<script type="text/javascript">
+    //扫一扫
+    function scan_it() {
+        var FNScanner = api.require('FNScanner');
+        FNScanner.open({
+            autorotation: true
+        }, function(ret, err) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+                if (ret.eventType == 'success') {
+                  //alert(JSON.stringify(ret));
+                    //二维码数据类型
+                    //{"name":"一汽大众汽车美容中心","id":"160a3797c82a6c5e094"}
+                    var content = eval('(' + ret.content + ')');
+                    var name = content.name;
+                    var id = content.id;
+                    api.openWin({
+                        name: 'pay',
+                        url: 'pay.html',
+                        pageParam: {
+                            name: name,
+                            id: id
+                        }
+                    });
+                }
 
-    var slide3 = new auiSlide({
-        container:document.getElementById("aui-slide3"),
-        // "width":300,
-        "height":160,
-        "speed":500,
-        "autoPlay": 3000, //自动播放
-        "loop":true,
-        "pageShow":true,
-        "pageStyle":'line',
-        'dotPosition':'center'
-    })
-    console.log(slide3.pageCount());
-    var toast = new auiToast({
-        })
-    $(".aui-col-xs-3").click(function(){
-      toast.custom({
-              title:"未开通",
-              html:'<i class="aui-iconfont aui-icon-laud"></i>',
-              duration:2000
-          });
-
-    });
-    // 扫一扫
-    function open_saoyisao(){
-      var FNScanner = api.require('FNScanner');
-      FNScanner.open({
-          autorotation: true
-      }, function(ret, err) {
-          if (ret) {
-              //alert(JSON.stringify(ret));
-          } else {
-              //alert(JSON.stringify(err));
-          }
-      });
+            } else {
+                //alert(JSON.stringify(err));
+            }
+        });
     }
 </script>
+
+</html>
