@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+	<style>
+		.content {
+			height: 1px;
+			width: 100%;
+		}
+
+		#classify {
+			color: #ffffff !important;
+		}
+	</style>
+</head>
+
+<body style="background-color:white;">
+
+	<div class="content">
+
+	</div>
+
+	<ul class="aui-list aui-form-list">
+
+		<li class="aui-list-item">
+			<div class="aui-list-item-inner">
+				<div class="aui-list-item-label">
+					金额
+				</div>
+				<div class="aui-list-item-input">
+					<input type="number" min="100" max="10000000" placeholder="请输入充值金额" id="chargemoney" value="100">
+				</div>
+			</div>
+		</li>
+	</ul>
+	<section class="aui-content-padded" style="padding:0;margin:0">
+		<ul class="aui-list aui-collapse aui-border">
+			<div class="aui-collapse-item">
+				<li class="aui-list-item aui-collapse-header" tapmode>
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-title">选择优惠券</div>
+						<div class="aui-list-item-right">
+							<i class="aui-iconfont aui-icon-down aui-collapse-arrow"></i>
+						</div>
+					</div>
+				</li>
+				<div class="aui-collapse-content" >
+					<li class="aui-list-item" tapmode onclick="" >
+						<div class="aui-list-item-inner">
+							<div class="aui-list-item-title">满100减20 (默认已选择)</div>
+						</div>
+					</li>
+
+				</div>
+			</div>
+
+		</ul>
+	</section>
+	<ul class="aui-list aui-form-list">
+
+		<li class="aui-list-item">
+			<div class="aui-list-item-inner">
+				<div class="aui-list-item-label">
+					请选择支付方式
+				</div>
+			</div>
+		</li>
+	</ul>
+	<div id="wrap" class="aui-content-padded">
+		<label><input class="aui-radio" checked="true" value="1" type="radio" name="demo"> 支付宝</label>
+
+			<br/>
+			<div style="height:10px;">
+
+			</div>
+			<label style="display:none"><input class="aui-radio" type="radio" value="2" name="demo" > 微信</label>
+
+	</div>
+	<div class="aui-btn aui-btn-info" style="margin-left:10%;margin-right:10%;margin-top:10%;width:80%;height:50px;text-align:center;line-height:50px;background-color:white;"
+	tapmode onclick="payOrder()">
+		<!-- <a href="#picture" style="color:white;width:80%;height:50px">充值</a> -->
+		充值</div>
+
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../script/mui.js"></script>
+<script type="text/javascript" src="../script/aui-collapse.js"></script>
+<script type="text/javascript" src="../script/mui.picker.min.js"></script>
+<script type="text/javascript">
+apiready = function () {
+		api.parseTapmode();
+
+}
+var collapse = new auiCollapse({
+		autoHide:false //是否自动隐藏已经展开的容器
+});
+function payOrder(){
+	var val_payPlatform = $('#wrap input[name="demo"]:checked ').val();
+	var paymoney = $("#chargemoney").val();
+	// alert(paymoney);
+	// alert(val_payPlatform)
+	// http://zz.chengcaibao.net/
+	// 'http://192.168.1.101/alipaytest.aspx'
+	// 'http://zz.chengcaibao.net/api/UserAmount/tesst'
+	//'http://zz.chengcaibao.net/api/useramount/recharge?username=17090098889&amount=1&ip=127.0.0.1&rechargetype=2',
+	// 	dataType: 'text',
+	api.ajax({
+		url: 'http://zz.chengcaibao.net/api/useramount/recharge?username=17090098889&amount='+ paymoney +'&ip=127.0.0.1&rechargetype=2',
+		method: 'get',
+	}, function(ret, err) {
+		if (ret) {
+			// var result = ret.replace(/amp;/g, '');
+
+			var rr = JSON.stringify(ret.payPar);
+			//alert(rr);
+			rr = rr.replace(new RegExp("&amp;","gm"),"&")
+			rr = rr.replace(new RegExp("\"","gm"),"")
+
+			//rr = rr.replace("wap","app");
+			//alert(rr);
+			var aliPayPlus = api.require('aliPayPlus');
+			aliPayPlus.payOrder({
+					orderInfo:rr
+			}, function(ret, err) {
+				if (ret.code == 9000) {
+					api.toast({
+						msg: '支付成功'
+					});
+				}else{
+					api.toast({
+						msg: '支付失败'
+					});
+				}
+			});
+
+
+		} else {
+			api.alert({
+				msg: JSON.stringify(err)
+			});
+		};
+	});
+
+}
+</script>
+
+</html>
