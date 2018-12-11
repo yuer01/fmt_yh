@@ -52,6 +52,17 @@
             </li>
         </ul>
     </div>
+    <div class="aui-content aui-margin-b-15">
+      <ul class="aui-list aui-select-list">
+        <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <label><input class="aui-radio" type="radio" name="radio1" checked>余额<span></span>元</label><br><br>
+                  <label><input class="aui-radio" type="radio" name="radio2">支付宝</label><br><br>
+                  <label><input class="aui-radio" type="radio" name="radio3">微信</label>
+              </div>
+          </li>
+      </ul>
+    </div>
     <div class="aui-btn aui-btn-block aui-btn-outlined" style="margin-left: 2rem;
     margin-right: 2rem;
     width: 80%;
@@ -65,6 +76,7 @@
         $(document).ready(function() {
             //console.log(api.pageParam.name);
             $('#h2').text(api.pageParam.name);
+            $('#h3').text(api.pageParam.id);
         });
     }
 
