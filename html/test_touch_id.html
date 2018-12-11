@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>指纹验证</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <br><br>
+
+    <div class="aui-btn aui-btn-block" tapmode onclick="verify();">开始验证</div>
+    <br>
+    <div class="aui-btn aui-btn-block" tapmode onclick="cancel_verify();">取消验证</div>
+
+
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    //开始验证
+    function verify() {
+        //先判断该手机是否支持指纹识别
+        var touchID = api.require('touchID');
+        touchID.isValid(function(ret) {
+            if (ret.status) {
+                // api.alert({
+                //     msg: "支持指纹识别功能！"
+                // });
+                touchID.verify({
+                    title: '验证指纹'
+                }, function(ret) {
+                    if (ret.status) {
+                        api.alert({
+                            msg: "验证通过"
+                        });
+                    } else {
+                        if (ret.code == 0) {
+                            api.alert({
+                                msg: "用户选择手动输入"
+                            });
+                        } else if (ret.code == 1) {
+                            api.alert({
+                                msg: "用户取消验证"
+                            });
+                        } else if (ret.code == 2) {
+                            api.alert({
+                                msg: "验证三次失败"
+                            });
+                        } else if (ret.code == 3) {
+                            api.alert({
+                                msg: "多次验证失败请锁定手机"
+                            });
+                        } else {
+                            api.alert({
+                                msg: "验证失败，未知错误"
+                            });
+                        }
+                    }
+                });
+
+            } else {
+                api.alert({
+                    msg: "不支持指纹识别功能！"
+                });
+            }
+        });
+    }
+    //取消验证
+    function cancel_verify() {
+        var touchID = api.require('touchID');
+        touchID.cancelVerify();
+    }
+</script>
+
+</html>

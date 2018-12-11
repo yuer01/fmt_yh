@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+      #submit{
+        width: 80%;
+        margin-left: 10%;
+      }
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav">注册</header>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        姓名
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请输入姓名">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        密码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请输入密码">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        确认密码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请确认密码">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        手机号码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请输入手机号码" id="mobile">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        验证码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="请输入验证码" id="code">
+                        <p><div class="aui-btn aui-btn-info" tapmode onclick="send();">发送验证码</div></p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+  <div class="aui-btn aui-btn-block" id="submit" tapmode onclick="verification();">注册</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+            var smsVerify = api.require('smsVerify');
+            smsVerify.register(function(ret, err) {
+                if (ret.status) {
+                    //api.alert({msg: '注册成功'});
+                } else {
+                    api.alert({
+                        msg: err.code + ' 注册失败'
+                    });
+                }
+            });
+        }
+        //发送
+    function send() {
+        var mobile = document.getElementById('mobile').value;
+        var smsVerify = api.require('smsVerify');
+        smsVerify.sms({
+            phone: mobile,
+            country: "86"
+        }, function(ret, err) {
+            if (ret.status) {
+                if (ret.smart == true) { // 安卓版特有功能 智能验证
+                    api.alert({
+                        msg: '智能验证成功：开发者可以在这里直接执行手机号验证成功之后的相关操作'
+                    });
+                } else {
+                    api.alert({
+                        msg: '短信发送成功'
+                    });
+                }
+            } else {
+                api.alert({
+                    msg: err.code + ' ' + err.msg
+                });
+            }
+        });
+    }
+    //验证
+    function verification() {
+        var mobile = document.getElementById('mobile').value;
+        var code = document.getElementById('code').value;
+        var smsVerify = api.require('smsVerify');
+        smsVerify.verify({
+            phone: mobile,
+            country: "86",
+            code: code
+        }, function(ret, err) {
+            if (ret.status) {
+                api.alert({
+                    msg: '验证成功'
+                });
+            } else {
+                api.alert({
+                    msg: err.code + ' ' + err.msg
+                });
+            }
+        });
+    }
+</script>
+
+</html>

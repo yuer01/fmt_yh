@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通讯录</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <br><br>
+    <div class="aui-btn aui-btn-block" tapmode onclick="open_contacts();">打开通讯录</div>
+    <br>
+    <div class="aui-btn aui-btn-block" tapmode onclick="add_contacts();">往通讯录添加一个联系人</div>
+    <br>
+    <div class="aui-btn aui-btn-block" tapmode onclick="queryByPage();">获取通讯录所有联系人全部信息</div>
+
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    //两个入口函数
+    apiready = function() {
+            $(document).ready(function() {
+
+            });
+        }
+        //打开通讯录点击某个联系人后获取该联系人的相关信息
+    function open_contacts() {
+        var contacts = api.require('contacts');
+        contacts.select(function(ret, err) {
+            if (ret) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+    //往通讯录添加一个联系人
+    function add_contacts() {
+        var contacts = api.require('contacts');
+        contacts.add({
+            groupId: 1,
+            lastName: '张',
+            firstName: '三丰',
+            middleName: '太极',
+            prefix: '他',
+            suffix: '牛',
+            phones: [{
+                '住宅': '12345678'
+            }, {
+                '工作': '87654321'
+            }],
+            email: 'zhengcuan@api.com',
+            company: '柚子科技',
+            title: '工程师',
+            address: {
+                Country: '中国',
+                State: '北京',
+                City: '北京市',
+                Street: '鸟巢街',
+                ZIP: '100000'
+            },
+            note: '无'
+        }, function(ret, err) {
+            if (ret) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+    //获取通讯录所有联系人全部信息
+    function queryByPage() {
+        var contacts = api.require('contacts');
+        contacts.queryByPage({
+            count: '',
+            pageIndex: 0
+        }, function(ret, err) {
+            if (ret) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+</script>
+
+</html>
