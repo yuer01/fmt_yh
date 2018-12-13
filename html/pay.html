@@ -33,13 +33,13 @@
                         金额
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="money" id="money">
+                        <input type="number" placeholder="money" id="money" value="0.01">
                     </div>
                 </div>
             </li>
         </ul>
         <br><br>
-        <ul class="aui-list aui-form-list" style="width:80%;margin-left: 10%;">
+        <!-- <ul class="aui-list aui-form-list" style="width:80%;margin-left: 10%;">
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-label">
@@ -50,15 +50,15 @@
                     </div>
                 </div>
             </li>
-        </ul>
+        </ul> -->
     </div>
     <div class="aui-content aui-margin-b-15">
       <ul class="aui-list aui-select-list">
         <li class="aui-list-item">
               <div class="aui-list-item-inner">
-                  <label><input class="aui-radio" type="radio" name="radio1" checked>余额<span></span>元</label><br><br>
-                  <label><input class="aui-radio" type="radio" name="radio2">支付宝</label><br><br>
-                  <label><input class="aui-radio" type="radio" name="radio3">微信</label>
+                  <label><input class="aui-radio" type="radio" name="demo" value="0"checked>余额</label><br><br>
+                  <label><input class="aui-radio" type="radio" name="demo" value="2">支付宝</label><br><br>
+                  <label style="display:none"><input class="aui-radio" type="radio" name="demo" value="1">微信</label>
               </div>
           </li>
       </ul>
@@ -70,46 +70,147 @@
 </body>
 <script type="text/javascript" src="script/api.js"></script>
 <script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/aui-dialog.js" ></script>
 <script type="text/javascript">
-    //两个入口函数
-    apiready = function() {
-        $(document).ready(function() {
-            //console.log(api.pageParam.name);
-            $('#h2').text(api.pageParam.name);
-            $('#h3').text(api.pageParam.id);
-        });
-    }
+var ID,NAME;
+apiready = function(){
+  ID=api.pageParam.id;
+  NAME=api.pageParam.name;
+  $("#h2").html(NAME);
+  // console.log(ID);
+  // console.log(NAME);
+  //查询余额
 
+}
+    //两个入口函数
+    // var ID=api.pageParam.name;
+    // var NAME=api.pageParam.id;
+
+
+    // apiready = function() {
+    //     $(document).ready(function() {
+    //         //console.log(api.pageParam.name);
+    //         $('#h2').text(api.pageParam.name);
+    //     });
+    // }
     function pay() {
-        var money = $('#money').val();
-        var password = $('#password').val();
-        if (money == '' || money == null || money == 'undefined') {
+        var moneystr = $("#money").val();
+
+        // alert(typeof(money));
+        // alert(typeof(balance));
+        // alert(money);
+        if (moneystr == '' || moneystr == null || moneystr == 'undefined') {
             alert('请输入金额');
-        } else if (password == '' || password == null || password == 'undefined') {
-            alert('请输入密码');
         } else {
-            api.ajax({
-                url: 'http://541436.testyuming.top/index/index/push',
-                method: 'post',
-                timeout: 5,
-                data: {
-                    values: {
-                        registrationId: api.pageParam.id,
-                        money: money
-                    },
+            var money = moneystr*1;
+            var balance = 2147483647;
+            var val_payPlatform = parseInt($("input[name='demo']:checked").val());
+            // alert(typeof(val_payPlatform));
+            // alert(val_payPlatform);
+            if(val_payPlatform==0){//余额支付
+              if(money>=balance||money<=0){
+                // alert(typeof(money));
+                // alert(money);
+                alert("输入金额有误");
+              }else{
+                  alert(money);
+                   var dialog = new auiDialog({});
+                   dialog.prompt({
+                    title:"请输入六位密码",
+                    text:'',
+                    buttons:['取消','确定']
+                    },function(ret){
+                      if(ret.buttonIndex == 2){
+                          // dialog.alert({
+                          //     title:"提示",
+                          //     msg: "您输入的内容是："+ret.text,
+                          //     buttons:['确定']
+                          // });
+                          //var pass=ret.text;
+                          var pass=document.querySelector('.aui-dialog-body input').value;
+                          var password="123123";
+                          // alert(typeof(pass));
+                          // alert(pass);
+                          // alert(typeof(password));
+                          // alert(password);
+                          if(pass==password){
+                            //余额支付
+                            var url='http://zz.chengcaibao.net/api/Order/Add?Amount='+money+'&ShopId=4&ShopName='+NAME+'&UserName=15638519981&PayType=3';
+                            api.ajax({
+                                url: url,
+                                method: 'post',
+                            },function(ret, err){
+                                if (ret) {
+                                    alert( JSON.stringify( ret ) );
+                                    var payPar=ret.payPar;
+                                    if(payPar==1){
+                                      alert("支付成功");
+                                    }else if(payPar==-3){
+                                      alert("付款店铺不存在");
+                                    }else if(payPar==-4){
+                                      alert("用户余额不足");
+                                    } else{
+                                      alert("支付异常，请稍后再次支付！");
+                                    }
+                                } else {
+                                    alert( JSON.stringify( err ) );
+                                }
+                            });
+                            //余额支付
+                          }else{
+                            alert("支付密码错误");
+                          }
+                      }
+                })
+                document.querySelector('.aui-dialog-body input').type = 'password';
+              }
+
+            }else if(val_payPlatform==2){//支付宝支付
+                	var paymoney = money;
+                  var url = 'http://zz.chengcaibao.net/api/Order/Add?Amount='+paymoney+'&ShopId=4&ShopName='+NAME+'&UserName=17090098889&PayType=2'
+                  //创建订单
+                    api.ajax({
+                        url: url,
+                        method: 'post',
+                    },function(ret, err){
+                        if (ret) {
+                            alert( JSON.stringify( ret ) );
+                            console.log( JSON.stringify( ret ) );
+                            var value2 = ret.value;
+                                    var rr = JSON.stringify( ret.payPar);
+                                    rr = rr.replace(new RegExp("&amp;","gm"),"&")
+                                    rr = rr.replace(new RegExp("\"","gm"),"")
+                                    var aliPayPlus = api.require('aliPayPlus');
+                                    aliPayPlus.payOrder({
+                                        orderInfo:rr
+                                    }, function(ret, err) {
+                                      if (ret.code == 9000) {
+                                        api.toast({
+                                          msg: '支付成功'
+                                        });
+                                        alert(ret);
+                                        alert(JSON.stringify(ret));
+                                        console.log(JSON.stringify(ret));
+                                        alert("支付成功");
+                                      }else{
+                                        api.toast({
+                                          msg: '支付失败'
+                                        });
+                                        alert("支付失败");
+                                      }
+                                    });
+                        } else {
+                          alert("错误");
+                            alert( JSON.stringify( err ) );
+                        }
+                    });
+                  //创建订单
+                }else{//微信支付
+                  alert("微信支付");
                 }
-            }, function(ret, err) {
-                if (ret) {
-                    //console.log(ret.code);
-                } else {
-                    //console.log(JSON.stringify(err));
-                    if (err.code == 3) {
-                        alert("支付成功")
-                    }
-                }
-            });
+          }
+
         }
-    }
 </script>
 
 </html>

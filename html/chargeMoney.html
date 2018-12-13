@@ -75,7 +75,7 @@
 			</div>
 		</li>
 	</ul>
-	<!-- <div id="wrap" class="aui-content-padded">
+	<div id="wrap" class="aui-content-padded">
 		<label><input class="aui-radio" checked="true" value="1" type="radio" name="demo"> 支付宝</label>
 
 			<br/>
@@ -84,8 +84,8 @@
 			</div>
 			<label style="display:none"><input class="aui-radio" type="radio" value="2" name="demo" > 微信</label>
 
-	</div> -->
-	<div class="aui-content aui-margin-b-15">
+	</div>
+	<!-- <div class="aui-content aui-margin-b-15">
 		<ul class="aui-list aui-select-list">
 			<li class="aui-list-item">
 						<div class="aui-list-item-inner">
@@ -94,7 +94,7 @@
 						</div>
 				</li>
 		</ul>
-	</div>
+	</div> -->
 	<div class="aui-btn aui-btn-info" style="margin-left:10%;margin-right:10%;margin-top:10%;width:80%;height:50px;text-align:center;line-height:50px;background-color:white;"
 	tapmode onclick="payOrder()">
 		<!-- <a href="#picture" style="color:white;width:80%;height:50px">充值</a> -->
@@ -103,7 +103,7 @@
 
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
 <script type="text/javascript" src="../script/mui.js"></script>
 <script type="text/javascript" src="../script/aui-collapse.js"></script>
 <script type="text/javascript" src="../script/mui.picker.min.js"></script>
@@ -147,10 +147,15 @@ function payOrder(){
 					api.toast({
 						msg: '支付成功'
 					});
+					alert(ret);
+					alert(JSON.stringify(ret));
+					console.log(JSON.stringify(ret));
+					alert("支付成功");
 				}else{
 					api.toast({
 						msg: '支付失败'
 					});
+					alert("支付失败");
 				}
 			});
 
