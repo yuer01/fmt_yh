@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>地图</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    var map, lon, lat, array;
+    //api初始化
+    apiready = function() {
+        array = api.pageParam.list;
+        map = api.require('bMap');
+        //console.log(JSON.stringify(array));
+        //判断定位是否开启
+        map.getLocationServices(function(ret, err) {
+            if (ret.enable) {
+                //alert(JSON.stringify(ret));
+            } else {
+                alert("未开启定位功能！");
+            }
+        });
+        //判断机型，ios需要初始化
+        if (api.systemType == 'ios') {
+            map.initMapSDK(function(ret) {
+                if (ret.status) {
+                    alert('地图初始化成功，可以从百度地图服务器检索信息了！');
+                }
+            });
+        }
+        //获取上个页面获取到的经纬度
+        lon = api.pageParam.lon;
+        lat = api.pageParam.lat;
+        if ((lon == '' || lon == null || lon == 'undefined') && (lat == '' || lat == null || lat == 'undefined')) {
+            alert('未获取到当前经纬度');
+        } else {
+            fnInitViewMap();
+        }
+    };
+
+    /**
+     * 初始化地图视图
+     *
+     * @param {JSON} ret 经纬度数据
+     */
+    function fnInitViewMap(ret) {
+        map.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.frameWidth,
+                h: api.frameHeight
+            },
+            center: {
+                lon: lon,
+                lat: lat
+            },
+            zoomLevel: 18,
+            showUserLocation: true,
+            fixedOn: api.frameName,
+            fixed: true
+        }, function(ret) {
+            if (ret.status) {
+                console.log('地图打开成功');
+            }
+        });
+        var json = '';
+        for (var i = 0; i < array.length; i++) {
+            // console.log(array[i].Id);
+            // console.log(array[i].LocLong);
+            // console.log(array[i].LocLat);
+            json += '{id:' + array[i].Id + ',lon:' + array[i].LocLong + ',lat:' + array[i].LocLat + '},'
+        }
+        //去除最后的逗号
+        json = json.substring(0, json.lastIndexOf(','));
+        //console.log(json);
+        //到时候把拼接好的字符直接替换就行
+        //在地图上根据经纬度添加标注
+        map.addAnnotations({
+            annotations: [{
+                id: 4,
+                lon: 113.73706568446782,
+                lat: 34.78279036359735
+            }],
+            //icon: '',
+            icon: 'widget://image/abc2.png',
+            draggable: true
+        }, function(ret) {
+            if (ret) {
+                //console.log(ret.id);
+            }
+        });
+        //循环添加标注信息
+        for (var i = 0; i < array.length; i++) {
+          // console.log(array[i].Id);
+          // console.log(array[i].Name);
+          // console.log(array[i].About);
+            map.setBubble({
+                id: array[i].Id,
+                bgImg: 'widget://image/bai.jpg',
+                content: {
+                    title: array[i].Name,
+                    subTitle: array[i].About,
+                    //illus: 'http://ico.ooopic.com/ajax/iconpng/?id=145044.png'//配图
+                },
+                styles: {
+                    titleColor: '#000',
+                    titleSize: 16,
+                    subTitleColor: '#999',
+                    subTitleSize: 12,
+                    illusAlign: 'left'
+                }
+            }, function(ret) {
+                if (ret) {
+                    //alert(JSON.stringify(ret));
+                    console.log(JSON.stringify(ret));
+                }
+            });
+        }
+
+        //设置点击标注后的弹出内容
+        map.setBubble({
+            id: 1,
+            bgImg: 'widget://image/bai.jpg',
+            content: {
+                title: '很大',
+                subTitle: '的骄傲赛浪快捷的考虑姜思达的凉开水机看',
+                //illus: 'http://ico.ooopic.com/ajax/iconpng/?id=145044.png'//配图
+            },
+            styles: {
+                titleColor: '#000',
+                titleSize: 16,
+                subTitleColor: '#999',
+                subTitleSize: 12,
+                illusAlign: 'left'
+            }
+        }, function(ret) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+                console.log(JSON.stringify(ret));
+            }
+        });
+
+        //显示当前位置小箭头 朝向
+        map.showUserLocation({
+            isShow: true,
+            trackingMode: 'none'
+        });
+    }
+</script>
+
+</html>

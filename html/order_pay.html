@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>支付</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../css/api.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link href="../css/common.css" rel="stylesheet" type="text/css" />
+    <style>
+        h1 {
+            text-align: center;
+            font-size: 1.6rem;
+            color: rgb(3, 169, 244);
+        }
+
+        #pay {
+            margin-left: 2rem;
+            margin-right: 2rem;
+            width: 80%;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" style="padding-top:25px;">
+        <a class="aui-pull-left" onclick="left()">
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        <div class="aui-title">支付</div>
+    </header>
+
+    <div style="margin-top:5%; text-align: center;">
+        <h2 id="Name"></h2>
+    </div>
+    <h1>￥<span id="money">0.01</span></h1>
+    <h3 style="text-align: center;">标准洗车1次</h3>
+    <h5 style="text-align: center;">爱车小站官方</h5>
+    <br>
+    <div id="datePlugin"></div>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">预约时间</div>
+                    <div class="aui-list-item">
+                        <input id="endTime" placeholder="请选择预约时间">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">服务价格</div>
+                    <div class="aui-list-item-right" id="NormPrice"></div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">红包优惠</div>
+                    <div class="aui-list-item-right">暂无优惠</div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">钱包余额</div>
+                    <div class="aui-list-item-right">无余额</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-select-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <label><input class="aui-radio" type="radio" name="radio" value="0" checked> 支付宝</label>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <label><input class="aui-radio" type="radio" name="radio" value="1"> 微信</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="aui-btn aui-btn-block aui-btn-outlined" id='pay' onclick="pay();">立即支付</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/date.js"></script>
+<script type="text/javascript" src="../script/iscroll.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#beginTime').date();
+        $('#endTime').date({
+            theme: "datetime"
+        });
+    });
+    var Name, NormPrice, ShopId, money;
+    //两个入口函数
+    apiready = function() {
+        $(document).ready(function() {
+            Name = api.pageParam.Name;
+            NormPrice = api.pageParam.NormPrice;
+            ShopId = api.pageParam.ShopId;
+            $('#Name').text(Name); //商家名
+            $('#NormPrice').text('￥' + NormPrice); //服务价格
+            money = $('#money').html(); //最终收费
+
+            //  console.log(Name);
+            //  console.log(NormPrice);
+            //  console.log(ShopId);
+        });
+    }
+
+    //支付
+    function pay() {
+        var radio = $('input:radio[name="radio"]:checked').val();
+
+        if (radio == 0) { //0 支付宝
+            var UserName = window.localStorage.getItem("UserName");
+            var url = 'http://zz.chengcaibao.net/api/Order/Add?Amount=0.01&ShopId=' + ShopId + '&ShopName=' + Name + '&UserName=' + UserName + '&PayType=2';
+            console.log(url);
+            api.ajax({
+                url: url,
+                method: 'post',
+            }, function(ret, err) {
+                if (ret) {
+                    console.log(JSON.stringify(ret));
+                    var rr = JSON.stringify(ret.payPar);
+                    rr = rr.replace(new RegExp("&amp;", "gm"), "&")
+                    rr = rr.replace(new RegExp("\"", "gm"), "")
+                    var aliPayPlus = api.require('aliPayPlus');
+                    aliPayPlus.payOrder({
+                        orderInfo: rr
+                    }, function(ret, err) {
+                        if (ret.code == 9000) {
+                            // api.toast({
+                            //     msg: '支付成功'
+                            // });
+                            //console.log(JSON.stringify(ret));
+                            //alert("支付成功");
+                            api.openWin({
+                                name: 'record',
+                                url: 'record.html',
+                            });
+
+                        } else {
+                            // api.toast({ // msg: '支付失败' // });
+                            alert("支付失败");
+                        }
+                    });
+
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+
+
+            //=========================推送======================
+            // var money = $('#money').val();
+            // var password = $('#password').val();
+            // if (money == '' || money == null || money == 'undefined') {
+            //     alert('请输入金额');
+            // } else if (password == '' || password == null || password == 'undefined') {
+            //     alert('请输入密码');
+            // } else {
+            //     api.ajax({
+            //         url: 'http://541436.testyuming.top/index/index/push',
+            //         method: 'post',
+            //         timeout: 5,
+            //         data: {
+            //             values: {
+            //                 registrationId: api.pageParam.id,
+            //                 money: money
+            //             },
+            //         }
+            //     }, function(ret, err) {
+            //         if (ret) {
+            //             //console.log(ret.code);
+            //         } else {
+            //             //console.log(JSON.stringify(err));
+            //             if (err.code == 3) {
+            //                 alert("支付成功")
+            //             }
+            //         }
+            //     });
+            // }
+        } else {
+            alert('敬请期待');
+        }
+    }
+    function left() {
+        api.openWin({
+            name: 'topic',
+            url: 'topic.html',
+        });
+    }
+</script>
+
+</html>

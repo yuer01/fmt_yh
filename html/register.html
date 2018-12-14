@@ -10,34 +10,35 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <link rel="stylesheet" type="text/css" href="../css/aui.css" />
     <style>
-      #submit{
-        width: 80%;
-        margin-left: 10%;
-      }
+        #submit {
+            width: 80%;
+            margin-left: 10%;
+        }
     </style>
 </head>
 
 <body>
-    <header class="aui-bar aui-bar-nav">注册</header>
+    <header class="aui-bar aui-bar-nav" style="padding-top:25px;">注册</header>
     <div class="aui-content aui-margin-b-15">
         <ul class="aui-list aui-form-list">
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-label">
-                        姓名
+                        手机号码
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入姓名">
+                        <input type="number" placeholder="请输入手机号码" id="mobile" value="17633539757">
                     </div>
                 </div>
             </li>
+
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-label">
                         密码
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入密码">
+                        <input type="text" placeholder="请输入密码" id="passWord1">
                     </div>
                 </div>
             </li>
@@ -47,17 +48,31 @@
                         确认密码
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请确认密码">
+                        <input type="text" placeholder="请确认密码" id="passWord2">
                     </div>
                 </div>
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-label">
-                        手机号码
+                        真实姓名
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入手机号码" id="mobile">
+                        <input type="text" placeholder="请输入真实姓名" id="RealName">
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        性别
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="hidden" name="radio" value="0">
+                        <label><input class="aui-radio" type="radio" name="radio" value="0" checked="">未知</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input class="aui-radio" type="radio" name="radio" value="1">男</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input class="aui-radio" type="radio" name="radio" value="2">女</label>
                     </div>
                 </div>
             </li>
@@ -67,30 +82,34 @@
                         验证码
                     </div>
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入验证码" id="code">
-                        <p><div class="aui-btn aui-btn-info" tapmode onclick="send();">发送验证码</div></p>
+                        <input type="number" placeholder="请输入短信验证码" id="code">
+                        <p>
+                            <div class="aui-btn aui-btn-info" tapmode onclick="send();">发送验证码</div>
+                        </p>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
-  <div class="aui-btn aui-btn-block" id="submit" tapmode onclick="verification();">注册</div>
+    <div class="aui-btn aui-btn-block" id="submit" tapmode onclick="register();">注册</div>
 </body>
 <script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
 <script type="text/javascript">
     apiready = function() {
-            var smsVerify = api.require('smsVerify');
-            smsVerify.register(function(ret, err) {
-                if (ret.status) {
-                    //api.alert({msg: '注册成功'});
-                } else {
-                    api.alert({
-                        msg: err.code + ' 注册失败'
-                    });
-                }
-            });
-        }
-        //发送
+        var smsVerify = api.require('smsVerify');
+        smsVerify.register(function(ret, err) {
+            if (ret.status) {
+                //api.alert({msg: '注册成功'});
+            } else {
+                api.alert({
+                    msg: err.code + '短信初始化失败'
+                });
+            }
+        });
+    }
+
+    //发送短信验证码
     function send() {
         var mobile = document.getElementById('mobile').value;
         var smsVerify = api.require('smsVerify');
@@ -115,26 +134,72 @@
             }
         });
     }
-    //验证
-    function verification() {
-        var mobile = document.getElementById('mobile').value;
-        var code = document.getElementById('code').value;
-        var smsVerify = api.require('smsVerify');
-        smsVerify.verify({
-            phone: mobile,
-            country: "86",
-            code: code
-        }, function(ret, err) {
-            if (ret.status) {
-                api.alert({
-                    msg: '验证成功'
-                });
-            } else {
-                api.alert({
-                    msg: err.code + ' ' + err.msg
-                });
-            }
-        });
+    //注册
+    function register() {
+        //获取输入参数
+        var mobile = $('#mobile').val(); //手机号码，登录名
+        var passWord1 = $('#passWord1').val(); //密码
+        var passWord2 = $('#passWord2').val();
+        var RealName = $('#RealName').val(); //真实姓名
+        var sex = $('input:radio[name="radio"]:checked').val(); //性别 1男 2女
+        var code = $('#code').val(); //短信验证码
+
+        if (mobile == '') {
+            alert('请输入手机号码');
+        } else if (passWord1 == '') {
+            alert('请输入密码');
+        } else if (passWord2 == '') {
+            alert('请确认密码');
+        } else if (passWord1 != passWord2) {
+            alert('两次密码输入不一致')
+        } else if (RealName == '') {
+            alert('请输入真实姓名');
+        } else if (code == '') {
+            alert('请输入短信验证码');
+        } else {
+            var url = 'http://aiche.chengcaibao.net/api/user/Register?UserName=' + mobile + '&passWord=' + passWord1 + '&UserType=1&RealName=' + RealName + '&MobilePhone=' + mobile + '&sex=' + sex + '&CityId=4';
+            api.ajax({
+                url: url,
+                method: 'post',
+            }, function(ret, err) {
+                if (ret) {
+                    //alert(JSON.stringify(ret));
+                    if (ret.code == 1 && ret.value > 0) {
+                        // alert('注册成功')
+                        api.openWin({
+                            name: 'index',
+                            url: '../index.html',
+                        });
+
+                    } else if (ret.code == 1 && ret.value == -1) {
+                        alert('用户名已经存在')
+                    }else {
+                      alert('系统异常，请稍后再试')
+                    }
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+
+        }
+        //验证短信验证码
+        // var smsVerify = api.require('smsVerify');
+        // smsVerify.verify({
+        //     phone: mobile,
+        //     country: "86",
+        //     code: code
+        // }, function(ret, err) {
+        //     if (ret.status) {
+        //         alert("验证成功")
+        //         data = 0;
+        //         alert(data);
+        //     } else {
+        //         // api.alert({
+        //         //     msg: err.code + ' ' + err.msg
+        //         // });
+        //         data = 1;
+        //     }
+        // })
     }
 </script>
 

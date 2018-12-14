@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <header class="aui-bar aui-bar-nav">
+    <header class="aui-bar aui-bar-nav" style="padding-top:25px;">
         <div class="aui-pull-left aui-btn aui-btn-outlined">
             <!-- <span class="aui-iconfont aui-icon-menu"></span> -->
             <div class="aui-col-xs-3">
@@ -29,26 +29,28 @@
     </header>
 
     <div class="aui-content aui-margin-b-15">
-    <ul class="aui-list aui-media-list">
-        <li class="aui-list-item aui-list-item-middle">
-            <div class="aui-media-list-item-inner">
-                <div class="aui-list-item-media" style="width: 3rem;">
-                    <img src="../image/gril.jpg" class="aui-img-round aui-list-img-sm">
-                </div>
-                <div class="aui-list-item-inner aui-list-item">
-                    <div class="aui-list-item-text">
-                        <div class="aui-list-item-title aui-font-size-14">13564525352</div>
-                        <!-- <div class="aui-list-item-right">08:00</div> -->
-                        <p><div class="aui-btn aui-btn-info">立即充值</div></p>
+        <ul class="aui-list aui-media-list">
+            <li class="aui-list-item aui-list-item-middle">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media" style="width: 3rem;">
+                        <img src="../image/gril.jpg" class="aui-img-round aui-list-img-sm">
                     </div>
-                    <div class="aui-list-item-text" style="font-size: 0.6rem;">
-                        余额 ￥0.00
+                    <div class="aui-list-item-inner aui-list-item">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-14" id="userName"></div>
+                            <!-- <div class="aui-list-item-right">08:00</div> -->
+                            <p>
+                                <div class="aui-btn aui-btn-info">立即充值</div>
+                            </p>
+                        </div>
+                        <div class="aui-list-item-text" style="font-size: 0.6rem;float: left;">
+                            余额 ￥<span class="amount"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </li>
-    </ul>
-</div>
+            </li>
+        </ul>
+    </div>
 
 
     <div class="aui-content aui-margin-b-15">
@@ -93,14 +95,14 @@
                 <div class="aui-list-item-inner aui-list-item-arrow">
                     <div class="aui-list-item-title">我的账户</div>
                     <div class="aui-list-item-right">
-                        <div style="position:relative;top:0; left:0">￥1200</div>
+                        <div style="position:relative;top:0; left:0">￥<span class="amount"></span></div>
                     </div>
                 </div>
             </li>
-            <li class="aui-list-item">
+            <li class="aui-list-item" onclick="record();">
                 <i class="aui-iconfont aui-icon-edit"></i>&nbsp;&nbsp;
                 <div class="aui-list-item-inner aui-list-item-arrow">
-                    <div class="aui-list-item-title">我的订单</div>
+                    <div class="aui-list-item-title">消费记录</div>
                     <div class="aui-list-item-right">
                         <div class="aui-badge" style="position:relative;top:0; left:0">88</div>
                     </div>
@@ -133,16 +135,53 @@
                     <div class="aui-list-item-title">设置</div>
                 </div>
             </li>
+            <li class="aui-list-item">
+                <i class="aui-iconfont aui-icon-gear"></i>&nbsp;&nbsp;
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title" onclick="clear_cache">清除缓存</div>
+                </div>
+            </li>
         </ul>
     </div>
 </body>
-<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
 <script type="text/javascript">
-    apiready = function(){
+    apiready = function() {
+            $(document).ready(function() {
 
+            });
+            var UserName = window.localStorage.getItem("UserName");
+            if (UserName != '') {
+                var url = 'http://zz.chengcaibao.net/api/UserAmount/GetUserAmount?userName=' + UserName + '';
+                api.ajax({
+                    url: url,
+                    method: 'post',
+                }, function(ret, err) {
+                    if (ret) {
+                        //console.log(JSON.stringify(ret));
+                        var userName = ret.value.userName;
+                        var amount = ret.value.amount;
+                        $('#userName').html(userName);
+                        $('.amount').html(amount);
+                    } else {
+                        alert(JSON.stringify(err));
+                    }
+                });
+            }
 
+        }
+        //清除缓存
+    function clear_cache() {
 
     }
+    //消费记录
+    function record() {
+        api.openWin({
+            name: 'record',
+            url: 'record.html',
+        });
+    }
+</script>
 
-    </script>
 </html>

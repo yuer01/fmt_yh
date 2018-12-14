@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>消费记录</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        .aui-searchbar {
+            background: transparent;
+        }
+
+        .aui-bar-nav .aui-searchbar-input {
+            background-color: #ffffff;
+        }
+
+        .aui-bar-light .aui-searchbar-input {
+            background-color: #f5f5f5;
+        }
+
+        .xia div {
+            width: 50%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="aui-bar aui-bar-nav" style="padding-top:25px;">消费记录</header>
+    <ul class="aui-list">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner xia">
+                <div class="aui-list-item-title">金额</div>
+                <div class="aui-list-item-right" style="font-size: 0.8rem;color: #212121;">时间</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list" id="list">
+
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner xia">
+                <div class="aui-list-item-title">15555555555</div>
+                <div class="aui-list-item-right">2017-06-24 12:24</div>
+            </div>
+        </li>
+
+    </ul>
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        $(document).ready(function() {
+            var UserName = window.localStorage.getItem("UserName");
+            var url = 'http://zz.chengcaibao.net/api/UserAmount/GetUserRechargeRecord?userName=' + UserName + '&pageIndex=1&pageSize=1000';
+            api.ajax({
+                url: url,
+                method: 'post',
+            }, function(ret, err) {
+                if (ret) {
+                    //console.log(JSON.stringify(ret));
+                    var array = ret.value.Entity;
+                    //console.log(JSON.stringify(array));
+                    var $list = $("#list");
+                    var li = '';
+                    for (var i = 0; i < array.length; i++) {
+                      var obj = array[i];
+                      li+='<li class="aui-list-item">'
+                      li+='<div class="aui-list-item-inner xia">'
+                      li+='<div class="aui-list-item-title">'+obj.RechargeAmount+'</div>'
+                      li+='<div class="aui-list-item-right">'+obj.AddTime+'</div>'
+                      li+='</div>'
+                      li+='</li>'
+                    }
+                    $list.html(li);
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+
+
+        });
+    }
+</script>
+
+
+</html>

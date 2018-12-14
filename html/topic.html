@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>洗车</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui-slide.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        .aui-content-padded {
+            padding: 0.75rem;
+            background-color: #ffffff;
+            margin-top: 0.75rem;
+        }
+
+        .bg-dark {
+            background: #333333 !important;
+        }
+
+        .aui-slide-node img {
+            width: auto;
+            height: 100%;
+        }
+
+        .fujin .right img {
+            float: right;
+            padding: 3px;
+            margin: 0 6px;
+        }
+
+        .fujin {
+            color: #757575;
+        }
+
+        h3 {
+            font-weight: bold;
+            color: #333333;
+            font-size: 18px;
+        }
+
+        .xing li {
+            float: left;
+        }
+
+        .xing li img {
+            width: 14px;
+            padding: 2px;
+        }
+
+        .div_xing span {
+            float: left;
+        }
+
+        #left {
+            font-size: 20px;
+            color: white;
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="aui-slide3">
+        <div class="aui-slide-wrap">
+            <div style="width:20px;height:20px;position:absolute;z-index:99999;top:40px;left:20px;">
+                <div class="aui-col-xs-3">
+                    <i id="left" class="aui-iconfont aui-icon-left" tapmode onclick="left();"></i>
+                </div>
+            </div>
+            <div class="aui-slide-node bg-dark">
+                <img src="../image/home_top1.png" />
+            </div>
+            <div class="aui-slide-node bg-dark">
+                <img src="../image/home_top1.png" />
+            </div>
+            <div class="aui-slide-node bg-dark">
+                <img src="../image/home_top1.png" />
+            </div>
+        </div>
+        <div class="aui-slide-page-wrap">
+            <!--分页容器-->
+        </div>
+        <div class="fujin">
+            <ul class="aui-list aui-media-list fujin">
+                <li class="aui-list-header title" style="background-color:#fff">
+                    <h3>附近门店</h3>
+                    <div class="right">
+                        <img src="../image/img_shoplist_dt_icon.png" width="30" tapmode onclick="open_map();" />
+                        <img src="../image/img_search_bigbtn.png" width="30" />
+                        <img src="../image/img_sx_btn.png" width="30" />
+                    </div>
+                </li>
+                <div id="list">
+                    <!-- <li class="aui-list-item aui-list-item-middle" onclick="pay()">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media">
+                                <img src="../image/4s0.jpg" width="80">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">
+                                        <h3>一汽大众汽车美容中心</h3></div>
+                                    <div class="aui-list-item-right">3.5km</div>
+                                </div>
+                                <div class="aui-list-item-text div_xing">
+                                    <ul class="xing">
+                                        <li><img src="../image/img_star_hover_btn.png"></li>
+                                        <li><img src="../image/img_star_hover_btn.png"></li>
+                                        <li><img src="../image/img_star_hover_btn.png"></li>
+                                        <li><img src="../image/img_star_hover_btn.png"></li>
+                                        <li><img src="../image/img_star_btn.png"></li>
+                                    </ul>
+                                    <span class="aui-list-item-left">4.8</span>
+                                    <span class="aui-list-item-left">月订单 125</span>
+                                </div>
+                                <div class="aui-list-item-text">
+
+                                    <div class="aui-list-item-text ">标准洗车 - 五座轿车</div>
+                                    <div class="aui-list-item-right aui-font-size-14" style="color:red;">￥15.000</div>
+
+                                </div>
+                                <div class="aui-list-item-text ">
+                                    <img src="../image/img_zk_icon.png" width="20">
+                                    <span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li> -->
+                </div>
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/aui-slide.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    //返回index页面
+    function left() {
+        api.openWin({
+            name: 'index',
+            url: '../index.html',
+        });
+    }
+    //轮播图
+    var slide3 = new auiSlide({
+        container: document.getElementById("aui-slide3"),
+        // "width":300,
+        "height": 240,
+        "speed": 500,
+        "autoPlay": 3000, //自动播放
+        "loop": true,
+        "pageShow": true,
+        "pageStyle": 'line',
+        'dotPosition': 'center'
+    });
+    //全局参数
+    var lon, lat, array;
+    //附近商家列表
+    apiready = function() {
+            api.parseTapmode();
+            //获取当前位置经纬度
+            map = api.require('bMap');
+            map.getLocation({
+                accuracy: '100m',
+                autoStop: true,
+                filter: 1
+            }, function(ret, err) {
+                if (ret.status) {
+                    // console.log(ret.lon);
+                    // console.log(ret.lat);
+                    lon = ret.lon;
+                    lat = ret.lat;
+                    //根据当前经纬度查附近门店
+                    api.ajax({
+                        url: 'http://zz.chengcaibao.net/api/shop/AreaList?pageIndex=1&pageSize=10&AreaId=0&lang=' + lon + '&LocLat=' + lat + '&Range=0&Business=洗车&Name=&sort=1',
+                        method: 'post',
+                    }, function(ret, err) {
+                        if (ret) {
+                            //console.log(JSON.stringify(ret));
+                            //console.log(ret.value.Entity);
+                            array = ret.value.Entity
+                            var li = '';
+                            for (var i = 0; i < array.length; i++) {
+                                var obj = array[i];
+                                // li += '<li class="aui-list-item aui-list-item-middle" onclick="pay(' + obj.Name + ',' + obj.UserName + ',' + obj.NormPrice + ')">'
+                                li += '<li class="aui-list-item aui-list-item-middle" onclick="pay(\'' + obj.Name + '\',' + obj.NormPrice + ',' + obj.Id + ')">'
+                                li += '<div class="aui-media-list-item-inner">'
+                                li += '<div class="aui-list-item-media">'
+                                li += '<img src="../image/home_list_pic1.png" width="80">'
+                                li += '</div>'
+                                li += '<div class="aui-list-item-inner aui-list-item-arrow">'
+                                li += '<div class="aui-list-item-text">'
+                                li += '<div class="aui-list-item-title aui-font-size-14">'
+                                li += '<h3>' + obj.Name + '</h3></div>'
+                                li += '<div class="aui-list-item-right">3.5km</div>'
+                                li += '</div>'
+                                li += '<div class="aui-list-item-text div_xing">'
+                                li += '<ul class="xing">'
+                                li += '<li><img src="../image/img_star_hover_btn.png" /></li>'
+                                li += '<li><img src="../image/img_star_hover_btn.png" /></li>'
+                                li += '<li><img src="../image/img_star_hover_btn.png" /></li>'
+                                li += '<li><img src="../image/img_star_hover_btn.png" /></li>'
+                                li += '<li><img src="../image/img_star_btn.png" /></li>'
+                                li += '</ul>'
+                                li += '<span class="aui-list-item-left">4.8</span>'
+                                li += '<span class="aui-list-item-left">月订单 125</span>'
+                                li += '</div>'
+                                li += '<div class="aui-list-item-text">'
+                                li += '<div class="aui-list-item-text ">标准洗车 - 五座轿车</div>'
+                                li += '<div class="aui-list-item-right aui-font-size-14" style="color:red;">￥' + obj.NormPrice + '</div>'
+                                li += '</div>'
+                                li += '<div class="aui-list-item-text ">'
+                                li += '<img src="../image/img_zk_icon.png" width="20" />'
+                                li += '<span class="aui-list-item-left">[周年庆]洗车美容服务五折起</span>'
+                                li += '</div>'
+                                li += '</div>'
+                                li += '</div>'
+                                li += '</li>'
+                            }
+                            $("#list").html(li);
+                        } else {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                } else {
+                    alert(err.code);
+                }
+            });
+        }
+        //进入商品详情页并支付
+    function pay(Name, NormPrice, ShopId) {
+        api.openWin({
+            name: 'pay',
+            url: 'order_pay.html',
+            pageParam: {
+                Name: Name,
+                NormPrice: NormPrice,
+                ShopId: ShopId
+            }
+        });
+    }
+
+    //打开百度地图
+    function open_map() {
+        //console.log(JSON.stringify(array));
+        api.openWin({
+            name: 'map',
+            url: 'map.html',
+            pageParam: {
+                lon: lon,
+                lat: lat,
+                list: array
+            }
+        });
+    }
+</script>
+
+</html>
