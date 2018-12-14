@@ -55,9 +55,7 @@
 <script type="text/javascript">
     //两个入口函数
     apiready = function() {
-            $(document).ready(function() {
 
-            });
         }
         //登录
     function login() {
@@ -74,10 +72,10 @@
                 if (ret.code == 1) {
                     //alert(ret.value.Message)
                     window.localStorage.setItem("UserName",UserName);//存入用户id
-                    api.openWin({
+                    /*api.openWin({
                         name: 'fingerprint',
                         url: 'fingerprint.html',
-                    });
+                    });*/
                 } else if (ret.code == 0) {
                     alert(ret.value.Message)
                 }
